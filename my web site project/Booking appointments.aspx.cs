@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -18,13 +18,10 @@ public partial class Booking_appointments : System.Web.UI.Page
     {
         string name = "", email = "", query = "", date = "", selectedHour = "", phone = "";
 
-        if (Request.Form["btnSave"] != null)
-        {
-            ddlHours.Items.Clear();
-
-        }
-
-        date = Request.Form["appointmentDate"];
+      
+     if (Request.Form["btnSave"] != null)
+    {
+         date = Request.Form["appointmentDate"];
 
         DataTable dt = PopulateAvailableHours(date);
 
@@ -40,38 +37,40 @@ public partial class Booking_appointments : System.Web.UI.Page
                 ddlHours.Items.Add(item);
             }
 
-            // Check if an hour has been previously selected
-
-
-
-
-        }
-
-        if (Request.Form["HSave"] != null)
-        {
-            selectedHour = Request.Form["ddlHours"];
          
-            
-               // ddlHours.SelectedValue = selectedHour;
-           
+
+
+
 
         }
+
+    }
+
+
+        if (Request.Form["HSave"]!=null)
+        
+        {
+
+            selectedHour = ddlHours.SelectedValue;
+        }
+        date = Request.Form["appointmentDate"];
+        selectedHour = ddlHours.SelectedValue;
+
+
+
+
+
         if (Request.Form["LastSave"] != null)
         {
             name = Request.Form["txtName"];
             email = Request.Form["txtEmail"];
             phone = Request.Form["phoneNum"];
-            query = $"UPDATE tblOrder SET name='{name}', email='{email}', IsAvailable=0, phone='{phone}' WHERE [hour]='{selectedHour}' AND dateID=(select id from tblDates where dateinp='{date}') ";
+            query = $"UPDATE tblOrder SET name='{name}', email='{email}', IsAvailable=0, phone='{phone}' WHERE hour='{selectedHour}' AND dateID=(select id from tblDates where dateinp='{date}') ";
             DBFunctions.RunNonQuery(query);
         }
 
 
-        //if (!string.IsNullOrEmpty(selectedHour) && ddlHours.Items.FindByValue(selectedHour) != null)
-        //{
-        //    query = $"UPDATE tblOrder SET name='{name}', email='{email}', IsAvailable=0, phone='{phone}' WHERE [hour]='{selectedHour}' AND dateID=(select id from tblDates where dateinp='{date}') ";
-        //    DBFunctions.RunNonQuery(query);
-        //}
-
+      
 
     }
 
